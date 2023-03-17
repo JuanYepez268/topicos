@@ -14,15 +14,14 @@ public class filtros {
     public static void main(String[] args) throws IOException {
         try {
             BufferedImage img = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\Ejemplo1.jpg"));
-            
-           System.out.println("Lectura realizada");
-           int ancho = img.getWidth();
-           int alto = img.getHeight();
-           double[][] m = new double[ancho][alto];
-           int[][] mr = new int[ancho][alto];
-           int[][] mg = new int[ancho][alto];
-           int[][] mb = new int[ancho][alto];
-           for (int i = 0; i < ancho; i++){
+            System.out.println("Lectura realizada");
+            int ancho = img.getWidth();
+            int alto = img.getHeight();
+            double[][] m = new double[ancho][alto];
+            int[][] mr = new int[ancho][alto];
+            int[][] mg = new int[ancho][alto];
+            int[][] mb = new int[ancho][alto];
+            for (int i = 0; i < ancho; i++){
                 for (int j = 0; j < alto; j++){
                     m[i][j] = img.getRGB(i, j); // RGB = (R*65536)+(G*256)+B , (when R is RED, G is GREEN and B is BLUE)
                     mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
