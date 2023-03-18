@@ -101,15 +101,18 @@ public class filtros {
                         }
                     }
                         
-                    JFrame marcoG = new JFrame("Escala de grises");
-                    marcoG.getContentPane().add(new JLabel(new ImageIcon(imgN)));
-                    marcoG.setSize(ancho, alto);
-                    marcoG.setVisible(true);
-                    marcoG.repaint();
+                    printnegativo(ancho, alto, imgN, "Escala de grises");
+                    System.out.println("Imagen -> Binarizado simple");
+
+                    // JFrame marcoG = new JFrame("Escala de grises");
+                    // marcoG.getContentPane().add(new JLabel(new ImageIcon(imgN)));
+                    // marcoG.setSize(ancho, alto);
+                    // marcoG.setVisible(true);
+                    // marcoG.repaint();
                         
                     System.out.println("Imagen -> Escala de gris");
                         
-                    marcoG.addKeyListener(new KeyAdapter() {
+                    marco2.addKeyListener(new KeyAdapter() {
                     double[][] backG = mG;
                     double nG = 0;
                     @Override
@@ -235,6 +238,10 @@ public class filtros {
 }
   
     
+    private static void grises(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
+        
+    }
+
 
     private static void binarizacion(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
         BufferedImage imgN = img;    
@@ -244,9 +251,6 @@ public class filtros {
                 double g = mg[i][j];
                 double b = mb[i][j];
                 double rgb = (r+g+b)/3;
-                
-
-                //double rgb = (mr[i][j]+mg[i][j]+mb[i][j])/3;
                 if(rgb  >= 127){
                     rgb = 255;
                 }
@@ -260,32 +264,6 @@ public class filtros {
         printnegativo(ancho, alto, imgN, "Negativo Binarizado simple");
         System.out.println("Imagen -> Binarizado simple");
     }
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//
-// apartir de aqui estan los filtros separados
-//
-//
-//
-//
-
-
-
-
-
-
-
-
 
     private static void negativo(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){       
         BufferedImage imgN = img;
@@ -301,7 +279,6 @@ public class filtros {
         printnegativo(ancho, alto, imgN, "Negativo");
         System.out.println("Imagen -> Negativo");
     }
-
 
     private static void printnegativo(int ancho, int alto, BufferedImage imgNG, String name) {       
         JFrame marcoNG = new JFrame(name);
