@@ -64,19 +64,15 @@ public class filtros {
             public void keyPressed(KeyEvent k) {
                 
                 if(k.getKeyChar() == 'n'){
-                    BufferedImage imgN = img;
-                    for (int i = 0; i < ancho; i++){
-                        for (int j = 0; j < alto; j++){
-                            double r = 255-mr[i][j];
-                            double g = 255-mg[i][j];
-                            double b = 255-mb[i][j];
-                            double neg = (r*65536)+(g*256)+(b);
-                            imgN.setRGB(i, j, (int)neg);
-                        }
-                    }
-                    printnegativo(ancho, alto, imgN, "Negativo");
-                    System.out.println("Imagen -> Negativo");
+                    negativo(ancho, alto, img, mr, mg, mb);
                 }
+
+                 if(k.getKeyChar() == 'n'){
+                    negativo(ancho, alto, img, mr, mg, mb);
+                }
+
+                
+
 
                 if(k.getKeyChar() == 'g'){
                     BufferedImage imgN = img;
@@ -116,22 +112,7 @@ public class filtros {
                     @Override
                     public void keyPressed(KeyEvent y) {
                         if(y.getKeyChar() == 'n'){
-                            BufferedImage imgN = img;
-                            for (int i = 0; i < ancho; i++){
-                                for (int j = 0; j < alto; j++){
-                                    double r = 255-mr[i][j];
-                                    double g = 255-mg[i][j];
-                                    double b = 255-mb[i][j];
-                                    double neg = (r*65536)+(g*256)+(b);
-                                    imgN.setRGB(i, j, (int)neg);
-                                    
-                                    double rgb = 255-(mrgbG[i][j]);
-                                    double gris = (rgb*65536)+(rgb*256)+(rgb);
-                                    imgN.setRGB(i, j, (int)gris);
-                                }
-                            }
-                            printnegativo(ancho, alto, imgN, "Negativo de grises");
-                            System.out.println("Imagen -> Negativo");
+                            negativo(ancho, alto, img, mr, mg, mb);
                         }
                                 
                         if(y.getKeyChar() == 'b'){
@@ -276,19 +257,28 @@ public class filtros {
 
 
 
-    private static void negativo(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){
-        BufferedImage imgNG = img;
-        for (int i = 0; i < ancho; i++){
-            for (int j = 0; j < alto; j++){
-                double rgb = 255-(mrgbG[i][j]);
-                double neg = (r*65536)+(g*256)+(b);
-                imgNG.setRGB(i, j, (int)neg);
-            }
-        }
-        printnegativo(ancho, alto, imgNG, "Negativo de grises");
-        System.out.println("Imagen -> Negativo");
-        
-        
+    
+    */
+
+//
+//
+//
+//
+// apartir de aqui estan los filtros separados
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+    private static void negativo(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){       
         BufferedImage imgN = img;
         for (int i = 0; i < ancho; i++){
             for (int j = 0; j < alto; j++){
@@ -302,7 +292,6 @@ public class filtros {
         printnegativo(ancho, alto, imgN, "Negativo");
         System.out.println("Imagen -> Negativo");
     }
-    */
 
 
     private static void printnegativo(int ancho, int alto, BufferedImage imgNG, String name) {       
