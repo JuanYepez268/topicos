@@ -64,11 +64,14 @@ public class filtros {
             public void keyPressed(KeyEvent k) {
                 
                 if(k.getKeyChar() == 'n'){
-                    negativo(ancho, alto, img, mr, mg, mb);
+                    negativo(ancho, alto, img, m, mr, mg, mb);
                 }
 
-                 if(k.getKeyChar() == 'n'){
-                    negativo(ancho, alto, img, mr, mg, mb);
+                if(k.getKeyChar() == 'n'){
+                    negativo(ancho, alto, img, m, mr, mg, mb);
+                }
+                if(k.getKeyChar() == '2'){
+                    binarizacion(ancho, alto, img, m, mr, mg, mb);
                 }
 
                 
@@ -112,7 +115,10 @@ public class filtros {
                     @Override
                     public void keyPressed(KeyEvent y) {
                         if(y.getKeyChar() == 'n'){
-                            negativo(ancho, alto, img, mr, mg, mb);
+                            negativo(ancho, alto, img, m, mr, mg, mb);
+                        }
+                        if(y.getKeyChar() == '2'){
+                            binarizacion(ancho, alto, img, m, mr, mg, mb);
                         }
                                 
                         if(y.getKeyChar() == 'b'){
@@ -229,12 +235,18 @@ public class filtros {
 }
   
     
-/*
-    private static void binarizacion(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){
-        BufferedImage imgC = img;    
+
+    private static void binarizacion(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
+        BufferedImage imgN = img;    
         for (int i = 0; i < ancho; i++){
             for (int j = 0; j < alto; j++){
-                double rgb = (mr[i][j]+mg[i][j]+mb[i][j])/3;
+                double r = mr[i][j];
+                double g = mg[i][j];
+                double b = mb[i][j];
+                double rgb = (r+g+b)/3;
+                
+
+                //double rgb = (mr[i][j]+mg[i][j]+mb[i][j])/3;
                 if(rgb  >= 127){
                     rgb = 255;
                 }
@@ -242,10 +254,10 @@ public class filtros {
                     rgb = 0;
                 }
                 double cla = (rgb*65536)+(rgb*256)+(rgb);
-                imgC.setRGB(i, j, (int)cla);
+                imgN.setRGB(i, j, (int)cla);
                 }
             }
-        printnegativo(ancho, alto, imgC, "Negativo Binarizado simple");
+        printnegativo(ancho, alto, imgN, "Negativo Binarizado simple");
         System.out.println("Imagen -> Binarizado simple");
     }
 
@@ -256,9 +268,6 @@ public class filtros {
 
 
 
-
-    
-    */
 
 //
 //
@@ -278,7 +287,7 @@ public class filtros {
 
 
 
-    private static void negativo(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){       
+    private static void negativo(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){       
         BufferedImage imgN = img;
         for (int i = 0; i < ancho; i++){
             for (int j = 0; j < alto; j++){
