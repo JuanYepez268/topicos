@@ -79,7 +79,7 @@ public class filtros {
                 }
 
                 if(k.getKeyChar() == 'g'){
-                    BufferedImage imgG = img;
+                    BufferedImage imgN = img;
                     double[][] mG = new double[ancho][alto];
                     int[][] mrgbG = new int[ancho][alto];
                         
@@ -87,19 +87,23 @@ public class filtros {
                         for (int j = 0; j < alto; j++){
                             double rgb = (mr[i][j]+mg[i][j]+mb[i][j])/3;
                             double gris = (rgb*65536)+(rgb*256)+(rgb);
-                            imgG.setRGB(i, j, (int)gris);
+                            imgN.setRGB(i, j, (int)gris);
+                            m[i][j] = imgN.getRGB(i, j); // RGB = (R*65536)+(G*256)+B , (when R is RED, G is GREEN and B is BLUE)
+                            mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                            mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                            mb[i][j] = ((int)m[i][j]) & 0x000000FF;
                         }
                     }
                         
                     for (int i = 0; i < ancho; i++){
                         for (int j = 0; j < alto; j++){
-                            mG[i][j] = imgG.getRGB(i, j);
+                            mG[i][j] = imgN.getRGB(i, j);
                             mrgbG[i][j] = ((int)m[i][j]) & 0x000000FF;
                         }
                     }
                         
                     JFrame marcoG = new JFrame("Escala de grises");
-                    marcoG.getContentPane().add(new JLabel(new ImageIcon(imgG)));
+                    marcoG.getContentPane().add(new JLabel(new ImageIcon(imgN)));
                     marcoG.setSize(ancho, alto);
                     marcoG.setVisible(true);
                     marcoG.repaint();
@@ -112,20 +116,26 @@ public class filtros {
                     @Override
                     public void keyPressed(KeyEvent y) {
                         if(y.getKeyChar() == 'n'){
-                            BufferedImage imgNG = img;
+                            BufferedImage imgN = img;
                             for (int i = 0; i < ancho; i++){
                                 for (int j = 0; j < alto; j++){
+                                    double r = 255-mr[i][j];
+                                    double g = 255-mg[i][j];
+                                    double b = 255-mb[i][j];
+                                    double neg = (r*65536)+(g*256)+(b);
+                                    imgN.setRGB(i, j, (int)neg);
+                                    
                                     double rgb = 255-(mrgbG[i][j]);
                                     double gris = (rgb*65536)+(rgb*256)+(rgb);
-                                    imgNG.setRGB(i, j, (int)gris);
+                                    imgN.setRGB(i, j, (int)gris);
                                 }
                             }
-                            printnegativo(ancho, alto, imgNG, "Negativo de grises");
+                            printnegativo(ancho, alto, imgN, "Negativo de grises");
                             System.out.println("Imagen -> Negativo");
                         }
                                 
                         if(y.getKeyChar() == 'b'){
-                            BufferedImage imgB = imgG;
+                            BufferedImage imgB = imgN;
                             JFrame marcoB = new JFrame("Brillo");
                             marcoB.getContentPane().add(new JLabel(new ImageIcon(imgB)));
                             marcoB.setSize(ancho, alto);
@@ -236,60 +246,9 @@ public class filtros {
         } 
     });        
 }
-    /*
-    private static void contraste(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){
-        double[][] mG = new double[ancho][alto];
-        int[][] mrgbG = new int[ancho][alto];
-        double[][] backG = mG;
-                    
-        BufferedImage imgB = img;
-
-        JFrame marcoB = new JFrame("Brillo");
-        marcoB.getContentPane().add(new JLabel(new ImageIcon(imgB)));
-        marcoB.setSize(ancho, alto);
-        marcoB.setVisible(true);
-        marcoB.repaint();
-
-        marcoB.addKeyListener(new KeyAdapter() {
-        double nB = 0;
-        @Override
-        public void keyPressed(KeyEvent l) {
-            if(l.getKeyChar() == '-'){
-                nB++;
-            }
-            if(l.getKeyChar() == '+'){
-                nB--;
-            }
-            if (nB > 0){
-                for (int i = 0; i < ancho; i++){
-                    for (int j = 0; j < alto; j++){
-                        double rgbG = Math.round((Math.pow(((mrgbG[i][j])/255.0), nB))*255.0);
-                        double brillop = (rgbG*65536)+(rgbG*256)+(rgbG);
-                        imgB.setRGB(i, j, (int)brillop);
-                        }
-                    }
-                }
-                if (nB < 0){
-                    for (int i = 0; i < ancho; i++){
-                        for (int j = 0; j < alto; j++){
-                            double rgbG = Math.round((Math.pow(((mrgbG[i][j])/255.0), 1/(Math.abs(nB))))*255.0);
-                            double brillop = (rgbG*65536)+(rgbG*256)+(rgbG);
-                            imgB.setRGB(i, j, (int)brillop);
-                        }
-                    }
-                }
-                if (nB == 0){
-                    for (int i = 0; i < ancho; i++){
-                        for (int j = 0; j < alto; j++){
-                            imgB.setRGB(i, j, (int)backG[i][j]);}
-                        }
-                    }
-                marcoB.repaint();
-                System.out.println("Factor de brillo: " + nB);
-                }
-        });
-    }
-
+  
+    
+/*
     private static void binarizacion(int ancho, int alto, BufferedImage img, int[][] mr, int[][] mg, int[][] mb){
         BufferedImage imgC = img;    
         for (int i = 0; i < ancho; i++){
