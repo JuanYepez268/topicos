@@ -59,7 +59,6 @@ public class filtros {
 
         marco.addKeyListener(new KeyAdapter() {
             double[][] back = m;
-            double n = 0;
             @Override
             public void keyPressed(KeyEvent k) {
                 
@@ -68,6 +67,9 @@ public class filtros {
                 }
                 if(k.getKeyChar() == '2'){
                     binarizacion(ancho, alto, img, m, mr, mg, mb);
+                }
+                if(k.getKeyChar() == 'c'){
+                    contraste(ancho, alto, img, m, mr, mg, mb);
                 }
                 if(k.getKeyChar() == 'g'){
                     grises(ancho, alto, img, m, mr, mg, mb);                    
@@ -121,58 +123,7 @@ public class filtros {
                     // }
                 // });
             }
-                    
-            if(k.getKeyChar() == 'b'){
-                BufferedImage imgB = img;
-                JFrame marcoB = new JFrame("Brillo");
-                marcoB.getContentPane().add(new JLabel(new ImageIcon(imgB)));
-                marcoB.setSize(ancho, alto);
-                marcoB.setVisible(true);
-                marcoB.repaint();
-                marcoB.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent l) {
-                    if(l.getKeyChar() == '-'){
-                        n++;
-                    }
-                                
-                    if(l.getKeyChar() == '+'){
-                        n--;
-                    }
-                    if (n > 0){
-                        for (int i = 0; i < ancho; i++){
-                            for (int j = 0; j < alto; j++){
-                                double r = Math.round((Math.pow(((mr[i][j])/255.0), n))*255.0);
-                                double g = Math.round((Math.pow(((mg[i][j])/255.0), n))*255.0);
-                                double b = Math.round((Math.pow(((mb[i][j])/255.0), n))*255.0);
-                                double brillop = (r*65536)+(g*256)+(b);;
-                                imgB.setRGB(i, j, (int)brillop);
-                            }
-                        }
-                    }
-                    if (n < 0){
-                        for (int i = 0; i < ancho; i++){
-                            for (int j = 0; j < alto; j++){
-                                double r = Math.round((Math.pow(((mr[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                                double g = Math.round((Math.pow(((mg[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                                double b = Math.round((Math.pow(((mb[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                                double brillop = (r*65536)+(g*256)+(b);
-                                imgB.setRGB(i, j, (int)brillop);
-                            }
-                        }
-                    }
-                    if (n == 0){
-                        for (int i = 0; i < ancho; i++){
-                            for (int j = 0; j < alto; j++){
-                                imgB.setRGB(i, j, (int)back[i][j]);}
-                            }
-                        }
-                    marcoB.repaint();
-                    System.out.println("Factor de brillo: " + n);
-                }
-            });
-        }
-                       
+                               
         if(k.getKeyChar() == 'r'){
             for (int i = 0; i < ancho; i++){
                 for (int j = 0; j < alto; j++){
@@ -205,11 +156,74 @@ public class filtros {
 
   //
 
+    private static void contraste(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
+        double[][] back = m;
+        
+        BufferedImage imgB = img;
+        JFrame marcoB = new JFrame("Brillo");
+        marcoB.getContentPane().add(new JLabel(new ImageIcon(imgB)));
+        marcoB.setSize(ancho, alto);
+        marcoB.setVisible(true);
+        marcoB.repaint();
+        marcoB.addKeyListener(new KeyAdapter() {
+            double n = 0;
+            @Override
+            public void keyPressed(KeyEvent l) {
+            if(l.getKeyChar() == '-'){
+                n++;
+            }
+                                
+            if(l.getKeyChar() == '+'){
+                n--;
+            }
+            if (n > 0){
+                for (int i = 0; i < ancho; i++){
+                    for (int j = 0; j < alto; j++){
+                        double r = Math.round((Math.pow(((mr[i][j])/255.0), n))*255.0);
+                        double g = Math.round((Math.pow(((mg[i][j])/255.0), n))*255.0);
+                        double b = Math.round((Math.pow(((mb[i][j])/255.0), n))*255.0);
+                        double brillop = (r*65536)+(g*256)+(b);;
+                        imgB.setRGB(i, j, (int)brillop);
+                        // m[i][j] = imgB.getRGB(i, j);
+                        // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                        // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                        // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                    }
+                }
+            }
+            if (n < 0){
+                for (int i = 0; i < ancho; i++){
+                    for (int j = 0; j < alto; j++){
+                        double r = Math.round((Math.pow(((mr[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                        double g = Math.round((Math.pow(((mg[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                        double b = Math.round((Math.pow(((mb[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                        double brillop = (r*65536)+(g*256)+(b);
+                        imgB.setRGB(i, j, (int)brillop);
+                        // m[i][j] = imgB.getRGB(i, j);
+                        // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                        // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                        // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                    }
+                }
+            }
+            if (n == 0){
+                for (int i = 0; i < ancho; i++){
+                    for (int j = 0; j < alto; j++){
+                        imgB.setRGB(i, j, (int)back[i][j]);
+                        // m[i][j] = imgB.getRGB(i, j);
+                        // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                        // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                        // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                    }
+                }
+            }
+            //marcoB.repaint();
+            printnegativo(ancho, alto, imgB, m, mr, mg, mb, "Brillo");
+            System.out.println("Factor de brillo: " + n);
+            }
+        });
+    }
 
-
-
-  
-    
     private static void grises(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
         BufferedImage imgN = img;
         double[][] mG = new double[ancho][alto];
@@ -235,7 +249,6 @@ public class filtros {
         printnegativo(ancho, alto, imgN, m, mr, mg, mb, "Escala de grises");
         System.out.println("Imagen -> Grises");
     }
-
 
     private static void binarizacion(int ancho, int alto, BufferedImage img, double[][] m, int[][] mr, int[][] mg, int[][] mb){
         BufferedImage imgN = img;    
@@ -289,8 +302,10 @@ public class filtros {
         marcoN.setVisible(true);
         marcoN.repaint();
         marcoN.addKeyListener(new KeyAdapter() {
+            double n = 0;
             @Override
             public void keyPressed(KeyEvent y) {
+                double[][] back = m;
                 if(y.getKeyChar() == 'n'){
                     negativo(ancho, alto, img, m, mr, mg, mb);
                 }
@@ -300,6 +315,56 @@ public class filtros {
                 if(y.getKeyChar() == 'g'){
                     grises(ancho, alto, img, m, mr, mg, mb);
                 }
+                if(y.getKeyChar() == '-'){
+                    n++;
+                }
+                                    
+                if(y.getKeyChar() == '+'){
+                    n--;
+                }
+                if (n > 0){
+                    for (int i = 0; i < ancho; i++){
+                        for (int j = 0; j < alto; j++){
+                            double r = Math.round((Math.pow(((mr[i][j])/255.0), n))*255.0);
+                            double g = Math.round((Math.pow(((mg[i][j])/255.0), n))*255.0);
+                            double b = Math.round((Math.pow(((mb[i][j])/255.0), n))*255.0);
+                            double brillop = (r*65536)+(g*256)+(b);;
+                            img.setRGB(i, j, (int)brillop);
+                            // m[i][j] = imgB.getRGB(i, j);
+                            // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                            // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                            // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                        }
+                    }
+                }
+                if (n < 0){
+                    for (int i = 0; i < ancho; i++){
+                        for (int j = 0; j < alto; j++){
+                            double r = Math.round((Math.pow(((mr[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                            double g = Math.round((Math.pow(((mg[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                            double b = Math.round((Math.pow(((mb[i][j])/255.0), 1/(Math.abs(n))))*255.0);
+                            double brillop = (r*65536)+(g*256)+(b);
+                            img.setRGB(i, j, (int)brillop);
+                            // m[i][j] = imgB.getRGB(i, j);
+                            // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                            // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                            // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                        }
+                    }
+                }
+                if (n == 0){
+                    for (int i = 0; i < ancho; i++){
+                        for (int j = 0; j < alto; j++){
+                            img.setRGB(i, j, (int)back[i][j]);
+                            // m[i][j] = imgB.getRGB(i, j);
+                            // mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
+                            // mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
+                            // mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                        }
+                    }
+                }
+                marcoN.repaint();
+                System.out.println("Factor de brillo: " + n);
             }
         });
     }   
