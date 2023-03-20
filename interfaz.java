@@ -3,20 +3,14 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
-public class interfaz extends JFrame{	//Declaración de elementos
-	private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel JLImagen1;
-    private javax.swing.JLabel JLImagen2;
-    private javax.swing.JPanel JPHistograma1;
-    private javax.swing.JPanel JPHistograma2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+public class interfaz extends JFrame{
+	private JLabel label1;
 	
 	public interfaz() {
 		setLayout(null);
@@ -24,6 +18,8 @@ public class interfaz extends JFrame{	//Declaración de elementos
 		this.setLocationRelativeTo(this);
         SetImageLabel(JLImagen1, "C:\\Users\\juan2\\Pictures\\Ejemplo1.jpg");
         SetImageLabel(JLImagen2, "C:\\Users\\juan2\\Pictures\\Ejemplo1.jpg");
+        //SetImageLabel(JLImagen1, "D:/Manuel/Pictures/Saved Pictures/1.png");
+        //SetImageLabel(JLImagen2, "D:/Manuel/Pictures/Saved Pictures/20.jpg");
 		
 	}
 	
