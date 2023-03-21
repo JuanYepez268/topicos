@@ -22,15 +22,15 @@ public class interfaz extends JFrame{	//Declaración de elementos
 		setLayout(null);
 		initComponents();	
 		this.setLocationRelativeTo(this);
-        SetImageLabel(JLImagen1, "D:/Manuel/Pictures/Saved Pictures/1.png");
-        SetImageLabel(JLImagen2, "D:/Manuel/Pictures/Saved Pictures/20.jpg");
+        SetImageLabel(JLImagen1, "C:\\Users\\juan2\\Pictures\\E1.jpg");
+        SetImageLabel(JLImagen2, "C:\\Users\\juan2\\Pictures\\Ejemplo2.jpg");
 		
 	}
 	
 	public static void main(String args[]) {
 		//Abertura de ventana
 		interfaz formulario1= new interfaz();
-		formulario1.setBounds(0,0,800,800);
+		formulario1.setBounds(0,0,800,700);
 		formulario1.setVisible(true);
 		formulario1.setLocationRelativeTo(null);
 		
@@ -55,7 +55,6 @@ public class interfaz extends JFrame{	//Declaración de elementos
 
 	
 	 private void initComponents() {
-
 	        jPanel1 = new javax.swing.JPanel();
 	        jLabel1 = new javax.swing.JLabel();
 	        jLabel2 = new javax.swing.JLabel();	        
@@ -69,10 +68,10 @@ public class interfaz extends JFrame{	//Declaración de elementos
 	        jLabel5 = new javax.swing.JLabel();
 	    
 	        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-	        jPanel1.setMaximumSize(new java.awt.Dimension(800, 800));
-	        jPanel1.setMinimumSize(new java.awt.Dimension(800, 800));
+	        jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
+	        jPanel1.setMinimumSize(new java.awt.Dimension(800, 600));
 	        jPanel1.setName("Contenedor"); // NOI18N
-	        jPanel1.setPreferredSize(new java.awt.Dimension(800, 800));
+	        jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
 	        JLImagen1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	        JLImagen1.setText("IMAGEN 1");
@@ -146,7 +145,7 @@ public class interfaz extends JFrame{	//Declaración de elementos
 
 	        jLabel5.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
 	        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-	        jLabel5.setText("Filtros");
+	        jLabel5.setText("Procesamiento puntual");
 
 	        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 	        jPanel1.setLayout(jPanel1Layout);
@@ -174,7 +173,7 @@ public class interfaz extends JFrame{	//Declaración de elementos
 	                .addGap(100, 100, 100))
 	            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
 	                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
 	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 	                .addGap(231, 231, 231))
@@ -226,7 +225,7 @@ public class interfaz extends JFrame{	//Declaración de elementos
 	
 	 //Metodo de la lista desplegable
 	 private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-	        // TODO add your handling code here:
+	        
 	    }                                          
 
 	 //Metodo para poner imagen en los label
