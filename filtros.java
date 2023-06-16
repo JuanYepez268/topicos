@@ -12,8 +12,8 @@ public class filtros {
     public static void main(String[] args) throws IOException {
         try {
             //BufferedImage img = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\E1.jpg"));
-            BufferedImage img = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\E1.jpg"));
-            BufferedImage img2 = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\E1.jpg"));
+            BufferedImage img = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\E2.jpg"));
+            BufferedImage img2 = ImageIO.read(new File("C:\\Users\\juan2\\Pictures\\E2.jpg"));
             System.out.println("Lectura realizada");
             int ancho = img.getWidth();
             int alto = img.getHeight();
@@ -147,10 +147,10 @@ public class filtros {
             if (n < 0){
                 for (int i = 0; i < ancho; i++){
                     for (int j = 0; j < alto; j++){
-                        double r = Math.round((Math.pow(((mr[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                        double g = Math.round((Math.pow(((mg[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                        double b = Math.round((Math.pow(((mb[i][j])/255.0), 1/(Math.abs(n))))*255.0);
-                        double brillop = (r*65536)+(g*256)+(b);
+                        double r = Math.round((Math.pow(((mr[i][j]) / 255.0), 1 / (Math.abs(n)))) * 255.0);
+                        double g = Math.round((Math.pow(((mg[i][j]) / 255.0), 1 / (Math.abs(n)))) * 255.0);
+                        double b = Math.round((Math.pow(((mb[i][j]) / 255.0), 1 / (Math.abs(n)))) * 255.0);
+                        double brillop = (r * 65536) + (g * 256) + (b);
                         imgN.setRGB(i, j, (int)brillop);
                     }
                 }
@@ -163,7 +163,7 @@ public class filtros {
                 }
             }
             //marcoB.repaint();
-            printnegativo(ancho, alto, imgN, m, mr, mg, mb, "brillo", img2, m2, mr2, mg2, mb2);
+            printnegativo(ancho, alto, imgN, m, mr, mg, mb, "brillo: "+n, img2, m2, mr2, mg2, mb2);
             System.out.println("Factor de brillo: " + n);
             }
         });
@@ -205,7 +205,7 @@ public class filtros {
                 double g = mg[i][j];
                 double b = mb[i][j];
                 double rgb = (r+g+b)/3;
-                if(rgb  >= 120){
+                if(rgb  >= 10){
                     rgb = 255;
                 }
                 else{
@@ -232,13 +232,14 @@ public class filtros {
                 double g = mg[i][j];
                 double b = mb[i][j];
                 double rgb = (r+g+b)/3;
-                if(rgb  >= 127 || rgb  <= 40){
-                    rgb = 255;
+                double rgb2 = 0;
+                if(rgb  >= 180 || rgb  <= 20){
+                    rgb2 = 255;
                 }
-                if(rgb  < 127 && rgb  >= 40){
-                    rgb = 0;
+                if(rgb  < 180 && rgb  > 20){
+                    rgb2 = Math.round(((255.0*((rgb-20.0)/(180.0-20.0)))));
                 }
-                double cla = (rgb*65536)+(rgb*256)+(rgb);
+                double cla = (rgb2*65536)+(rgb2*256)+(rgb2);
                 imgN.setRGB(i, j, (int)cla);
                 m[i][j] = imgN.getRGB(i, j);
                 mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
@@ -360,13 +361,13 @@ public class filtros {
 
                 imgN2.setRGB(i, j, (int)neg);
 
-                m[i][j] = imgN.getRGB(i, j);
-                mr[i][j] = ((int)m[i][j]>> 16) & 0x000000FF;
-                mg[i][j] = ((int)m[i][j]>> 8) & 0x000000FF;
-                mb[i][j] = ((int)m[i][j]) & 0x000000FF;
+                m2[i][j] = imgN2.getRGB(i, j);
+                mr2[i][j] = ((int)m2[i][j]>> 16) & 0x000000FF;
+                mg2[i][j] = ((int)m2[i][j]>> 8) & 0x000000FF;
+                mb2[i][j] = ((int)m2[i][j]) & 0x000000FF;
                 }
             }
-        printnegativo(ancho, alto, imgN2, m, mr, mg, mb, "Bordes", img2, m2, mr2, mg2, mb2);
+        printnegativo(ancho, alto, imgN2, m2, mr2, mg2, mb2, "Bordes", img2, m2, mr2, mg2, mb2);
         System.out.println("Imagen -> Bordes");
         }
 
@@ -586,4 +587,5 @@ public class filtros {
             }
         });
     }   
+
 }
